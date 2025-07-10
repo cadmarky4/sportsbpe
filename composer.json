@@ -1,0 +1,32 @@
+{
+    "private": true,
+    "version": "1.0.20",
+    "name": "regmon-project/regmon",
+    "description": "Athlete Monitoring in Sport Practice and Research",
+    "keywords": ["athlete monitoring", "recovery management", "athlete", "monitoring"],
+    "homepage": "https://github.com/REGmon-project/regmon",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "madnetdev",
+            "email": "madnetdev@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "ChristianStrotkoetter",
+            "email": "christian.strotkoetter@uni-mainz.de",
+            "role": "Developer"
+        },
+        {
+            "name": "kencreek",
+            "email": "gustavo.estero@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.8.0"
+    },
+	"require-dev": {
+		"phpstan/phpstan": "1.*"
+	}
+}

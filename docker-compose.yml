@@ -1,0 +1,67 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    networks:
+      - br-net-copy
+    ports:
+      - "8001:80"  # Changed from 8000
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/var/www/public
+      - /var/www/public/vendor/
+      - /var/www/public/node_modules/
+      - ./cfg/php.production.ini:/usr/local/etc/php/php.ini
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: regmondb_copy  # Changed from regmondb
+      MYSQL_USER: regmon
+      MYSQL_PASSWORD: regmon123
+      XDEBUG_MODE: develop,debug
+      XDEBUG_CONFIG: client_host=host.docker.internal client_port=9003 start_with_request=yes
+      STAGE: production
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    networks:
+      - br-net-copy
+    ports:
+      - 8889:80  # Changed from 8888
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_USER: regmon
+      PMA_PASSWORD: regmon123
+
+  db:
+    image: mysql:8.4
+    networks:
+      - br-net-copy
+    volumes:
+      - mysql_data_copy:/var/lib/mysql  # Changed from mysql_data
+      - ./extra/init_scripts:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_DATABASE: regmondb_copy  # Changed from regmondb
+      MYSQL_USER: regmon
+      MYSQL_PASSWORD: regmon123
+      MYSQL_ROOT_PASSWORD: root123
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "regmon", "-pregmon123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  mysql_data_copy:  # Changed from mysql_data
+    driver: local
+
+networks:
+  br-net-copy:  # Changed from br-net
+    driver: bridge
