@@ -45,7 +45,7 @@ function get_DB_CONFIG__From_ENV_File_Test():array {
         echo "Using individual environment variables<br>";
         // Fallback to individual environment variables
         $DB_CONFIG_arr["DB_Host"] = getenv("MYSQL_HOST");
-        $DB_CONFIG_arr["DB_Port"] = getenv("MYSQL_PORT") ?: "3306";
+        $DB_CONFIG_arr["DB_Port"] = getenv("MYSQL_PORT") ?: "18598";
         $DB_CONFIG_arr["DB_Name"] = getenv("MYSQL_DATABASE");
         $DB_CONFIG_arr["DB_User"] = getenv("MYSQL_USER");
         
