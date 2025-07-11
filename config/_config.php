@@ -34,20 +34,6 @@ function get_DB_CONFIG__From_ENV_File(string $ENV_File):mixed {
 	$DB_CONFIG_arr["DB_Host"] = getenv("MYSQL_HOST");
 	$DB_CONFIG_arr["DB_Name"] = getenv("MYSQL_DATABASE");
 	$DB_CONFIG_arr["DB_User"] = getenv("MYSQL_USER");
-	
-	// Force PostgreSQL for Render deployment
-	$render_host = getenv("MYSQL_HOST");
-	if ($render_host && strpos($render_host, 'dpg-') === 0) {
-		// This is a Render PostgreSQL hostname
-		$DB_CONFIG_arr["DB_Type"] = 'pgsql';
-	} elseif ($render_host === 'db') {
-		// This is local Docker MySQL
-		$DB_CONFIG_arr["DB_Type"] = 'mysqli';
-	} else {
-		// Default to PostgreSQL for any other case
-		$DB_CONFIG_arr["DB_Type"] = 'pgsql';
-	}
-	
 	$file_path = getenv("MYSQL_PASSWORD_FILE");
 	$file_contents = "";
 	if ($file_path) {
@@ -55,9 +41,9 @@ function get_DB_CONFIG__From_ENV_File(string $ENV_File):mixed {
 	} 
 	if ($file_contents) {
 		$DB_CONFIG_arr["DB_Pass"] = trim($file_contents);
-	} else {
-		// Fallback to direct password
-		$DB_CONFIG_arr["DB_Pass"] = getenv("MYSQL_PASSWORD");
+	}  else {
+    	// Fallback to direct password
+    	$DB_CONFIG_arr["DB_Pass"] = getenv("MYSQL_PASSWORD");
 	}
 	return $DB_CONFIG_arr;
 }
@@ -114,16 +100,14 @@ else {
 //get $DB_CONFIG #################################
 
 
-//set report off - only for MySQL
-if (isset($DB_CONFIG['DB_Type']) && $DB_CONFIG['DB_Type'] === 'mysqli') {
-	mysqli_report(MYSQLI_REPORT_OFF);
-}
+//set report off
+mysqli_report(MYSQLI_REPORT_OFF);
 //from php 8.1.0 the default is MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT
 
 
 //Init DB ###############################################
 require_once(__DIR__.'/'.$PATH_2_ROOT.'php/class.db.php');	
-$db = db::open($DB_CONFIG['DB_Type'], $DB_CONFIG['DB_Name'].'', $DB_CONFIG['DB_User'].'', $DB_CONFIG['DB_Pass'].'', $DB_CONFIG['DB_Host'].'');
+$db = db::open('mysqli', $DB_CONFIG['DB_Name'].'', $DB_CONFIG['DB_User'].'', $DB_CONFIG['DB_Pass'].'', $DB_CONFIG['DB_Host'].'');
 //Init DB ###############################################
 
 
