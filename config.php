@@ -235,12 +235,23 @@ if (isset($SEC_check_config)) {
 						
 						$db_error = false;
 						try {
-							//supposed we have a db connection
-							$conn = mysqli_connect($DB_CONFIG['DB_Host'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Name']);
+							// FIX: Use Railway database credentials from environment variables
+							$host = getenv('MYSQL_HOST') ?: 'interchange.proxy.rlwy.net';
+							$port = getenv('MYSQL_PORT') ?: '18598';
+							$database = getenv('MYSQL_DATABASE') ?: 'railway';
+							$user = getenv('MYSQL_USER') ?: 'root';
+							$password = getenv('MYSQL_PASSWORD') ?: 'BUFUTWhqmANKPmEWFOSTJdibZHXvIUqm';
+							
+							// Connect with correct Railway credentials and port
+							$conn = mysqli_connect($host, $user, $password, $database, (int)$port);
+							
 							if ($conn) {
 								mysqli_query($conn, "SET NAMES 'UTF8'");
 								//execute multi query
 								mysqli_multi_query($conn, $DB_Migration_File_content);
+							} else {
+								$db_error = true;
+								$DB_Migration_File_Error = 'DB Migration : Connection failed - could not connect to Railway database';
 							}
 						}
 						catch( mysqli_sql_exception $e ) {
