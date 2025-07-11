@@ -34,6 +34,16 @@ function get_DB_CONFIG__From_ENV_File(string $ENV_File):mixed {
 	$DB_CONFIG_arr["DB_Host"] = getenv("MYSQL_HOST");
 	$DB_CONFIG_arr["DB_Name"] = getenv("MYSQL_DATABASE");
 	$DB_CONFIG_arr["DB_User"] = getenv("MYSQL_USER");
+	
+	// Detect database type - Force PostgreSQL for Render deployment
+	$database_url = getenv("DATABASE_URL");
+	if ($database_url && strpos($database_url, 'postgresql://') === 0) {
+		$DB_CONFIG_arr["DB_Type"] = 'pgsql';
+	} else {
+		// Force PostgreSQL for Render, use MySQL for local development
+		$DB_CONFIG_arr["DB_Type"] = getenv("MYSQL_HOST") === 'db' ? 'mysqli' : 'pgsql';
+	}
+	
 	$file_path = getenv("MYSQL_PASSWORD_FILE");
 	$file_contents = "";
 	if ($file_path) {
@@ -41,9 +51,9 @@ function get_DB_CONFIG__From_ENV_File(string $ENV_File):mixed {
 	} 
 	if ($file_contents) {
 		$DB_CONFIG_arr["DB_Pass"] = trim($file_contents);
-	}  else {
-    	// Fallback to direct password
-    	$DB_CONFIG_arr["DB_Pass"] = getenv("MYSQL_PASSWORD");
+	} else {
+		// Fallback to direct password
+		$DB_CONFIG_arr["DB_Pass"] = getenv("MYSQL_PASSWORD");
 	}
 	return $DB_CONFIG_arr;
 }
@@ -100,8 +110,10 @@ else {
 //get $DB_CONFIG #################################
 
 
-//set report off
-// mysqli_report(MYSQLI_REPORT_OFF);
+//set report off - only for MySQL
+if (isset($DB_CONFIG['DB_Type']) && $DB_CONFIG['DB_Type'] === 'mysqli') {
+	mysqli_report(MYSQLI_REPORT_OFF);
+}
 //from php 8.1.0 the default is MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT
 
 
