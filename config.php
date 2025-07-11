@@ -13,7 +13,7 @@ $ENV_File_Missing = false;
 $ENV_File_Missing_Error = '';
 
 $APP_Database_Empty = false;
-$DB_Migrations_Directory = __DIR__. '/extra/';
+$DB_Migrations_Directory = __DIR__. '/extra/migration/';  // Changed from '/extra/' to '/extra/migration/'
 $DB_Migration_File_Error = '';
 
 $APP_Admin_User_Missing = false;
