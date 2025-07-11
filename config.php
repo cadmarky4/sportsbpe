@@ -103,7 +103,26 @@ if (isset($SEC_check_config)) {
 		//set post values back to form
 		$DB_Migration_File_Selected = $_POST['DB_Migration_File'] ?? '';
 
+		// DEBUG: Add debugging output
+		echo "<div style='background: #f0f0f0; padding: 10px; margin: 10px; border: 1px solid #ccc;'>";
+		echo "<h3>Debug Info:</h3>";
+		echo "DB_Migrations_Directory: " . $DB_Migrations_Directory . "<br>";
+		echo "Directory exists: " . (is_dir($DB_Migrations_Directory) ? 'YES' : 'NO') . "<br>";
+		echo "DB_Migration_File_Selected: '" . $DB_Migration_File_Selected . "'<br>";
+		
+		if (is_dir($DB_Migrations_Directory)) {
+			$files = scandir($DB_Migrations_Directory);
+			echo "Files in directory: " . implode(', ', $files) . "<br>";
+		}
+		echo "</div>";
+
 		$DB_Migrations_Files_arr = get_DB_Migrations_Files($DB_Migrations_Directory);
+		
+		// DEBUG: Show what get_DB_Migrations_Files returned
+		echo "<div style='background: #f0f0f0; padding: 10px; margin: 10px; border: 1px solid #ccc;'>";
+		echo "<h3>Migration Files Found:</h3>";
+		echo "<pre>" . print_r($DB_Migrations_Files_arr, true) . "</pre>";
+		echo "</div>";
 		
 		// Hardcode for debugging - remove this later
 		$DB_Migrations_Files_arr = array(
@@ -112,6 +131,12 @@ if (isset($SEC_check_config)) {
 			['add_sports_en.sql', 'add_sports_en.sql (English Sports)'],
 			['add_sports_de.sql', 'add_sports_de.sql (German Sports)']
 		);
+		
+		// DEBUG: Show final array
+		echo "<div style='background: #f0f0f0; padding: 10px; margin: 10px; border: 1px solid #ccc;'>";
+		echo "<h3>Final Migration Files Array:</h3>";
+		echo "<pre>" . print_r($DB_Migrations_Files_arr, true) . "</pre>";
+		echo "</div>";
 	}
 
 	elseif ($SEC_check_config == 'APP_Admin_User_Missing') {
@@ -191,32 +216,45 @@ if (isset($SEC_check_config)) {
 		}
 
 		elseif ($_POST['config_type'] == 'Config_APP_Database_Init') {
-			//get db migration file contents
-			$DB_Migration_File = $DB_Migrations_Directory . $DB_Migration_File_Selected;
-			$DB_Migration_File_content = file_get_contents($DB_Migration_File);
-
-			if ($DB_Migration_File_content) {
-				//Set MySQLi to throw exceptions 
-				mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+			// Add safety checks before trying to read the file
+			if (empty($DB_Migration_File_Selected)) {
+				$DB_Migration_File_Error = 'Error: Please select a migration file first.';
+			} else {
+				//get db migration file contents
+				$DB_Migration_File = $DB_Migrations_Directory . $DB_Migration_File_Selected;
 				
-				$db_error = false;
-				try {
-					//supposed we have a db connection
-					$conn = mysqli_connect($DB_CONFIG['DB_Host'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Name']);
-					if ($conn) {
-						mysqli_query($conn, "SET NAMES 'UTF8'");
-						//execute multi query
-						mysqli_multi_query($conn, $DB_Migration_File_content);
-					}
-				}
-				catch( mysqli_sql_exception $e ) {
-					$db_error = true;
-					$DB_Migration_File_Error = 'DB Migration : Fail with Error: ' . $e->getCode() . " | " . $e->getMessage();
-				}
+				// Check if file exists before trying to read it
+				if (!file_exists($DB_Migration_File)) {
+					$DB_Migration_File_Error = 'Error: Migration file not found: ' . $DB_Migration_File;
+				} else {
+					$DB_Migration_File_content = file_get_contents($DB_Migration_File);
 
-				if (!$db_error) {
-					sleep(1); //give a second to finish
-					reload_Config_Page();	
+					if ($DB_Migration_File_content) {
+						//Set MySQLi to throw exceptions 
+						mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+						
+						$db_error = false;
+						try {
+							//supposed we have a db connection
+							$conn = mysqli_connect($DB_CONFIG['DB_Host'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Name']);
+							if ($conn) {
+								mysqli_query($conn, "SET NAMES 'UTF8'");
+								//execute multi query
+								mysqli_multi_query($conn, $DB_Migration_File_content);
+							}
+						}
+						catch( mysqli_sql_exception $e ) {
+							$db_error = true;
+							$DB_Migration_File_Error = 'DB Migration : Fail with Error: ' . $e->getCode() . " | " . $e->getMessage();
+						}
+
+						if (!$db_error) {
+							sleep(1); //give a second to finish
+							reload_Config_Page();	
+						}
+					} else {
+						$DB_Migration_File_Error = 'Error: Could not read migration file content.';
+					}
 				}
 			}
 		}
