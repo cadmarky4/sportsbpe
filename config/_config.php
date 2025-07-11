@@ -29,23 +29,32 @@ $ENV_File = __DIR__ . '/' . $PATH_2_ROOT . '.env';
 $ENV_File_Sample = __DIR__ . '/' . $PATH_2_ROOT . '.env.sample';
 
 function get_DB_CONFIG__From_ENV_File(string $ENV_File):mixed {
-	$DB_CONFIG_arr = array();
-	//load Environment Variables 
-	$DB_CONFIG_arr["DB_Host"] = getenv("MYSQL_HOST");
-	$DB_CONFIG_arr["DB_Name"] = getenv("MYSQL_DATABASE");
-	$DB_CONFIG_arr["DB_User"] = getenv("MYSQL_USER");
-	$file_path = getenv("MYSQL_PASSWORD_FILE");
-	$file_contents = "";
-	if ($file_path) {
-		$file_contents = file_get_contents($file_path);
-	} 
-	if ($file_contents) {
-		$DB_CONFIG_arr["DB_Pass"] = trim($file_contents);
-	}  else {
-    	// Fallback to direct password
-    	$DB_CONFIG_arr["DB_Pass"] = getenv("MYSQL_PASSWORD");
-	}
-	return $DB_CONFIG_arr;
+    $DB_CONFIG_arr = array();
+    //load Environment Variables 
+    $DB_CONFIG_arr["DB_Host"] = getenv("MYSQL_HOST");
+    $DB_CONFIG_arr["DB_Name"] = getenv("MYSQL_DATABASE");
+    $DB_CONFIG_arr["DB_User"] = getenv("MYSQL_USER");
+    
+    // Detect database type
+    $database_url = getenv("DATABASE_URL");
+    if ($database_url && strpos($database_url, 'postgresql://') === 0) {
+        $DB_CONFIG_arr["DB_Type"] = 'pgsql';
+    } else {
+        $DB_CONFIG_arr["DB_Type"] = 'mysqli';
+    }
+    
+    $file_path = getenv("MYSQL_PASSWORD_FILE");
+    $file_contents = "";
+    if ($file_path) {
+        $file_contents = file_get_contents($file_path);
+    } 
+    if ($file_contents) {
+        $DB_CONFIG_arr["DB_Pass"] = trim($file_contents);
+    } else {
+        // Fallback to direct password
+        $DB_CONFIG_arr["DB_Pass"] = getenv("MYSQL_PASSWORD");
+    }
+    return $DB_CONFIG_arr;
 }
 
 function is_CONFIG_Option_Missing():bool {
@@ -101,13 +110,13 @@ else {
 
 
 //set report off
-mysqli_report(MYSQLI_REPORT_OFF);
+// mysqli_report(MYSQLI_REPORT_OFF);
 //from php 8.1.0 the default is MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT
 
 
 //Init DB ###############################################
 require_once(__DIR__.'/'.$PATH_2_ROOT.'php/class.db.php');	
-$db = db::open('mysqli', $DB_CONFIG['DB_Name'].'', $DB_CONFIG['DB_User'].'', $DB_CONFIG['DB_Pass'].'', $DB_CONFIG['DB_Host'].'');
+$db = db::open($DB_CONFIG['DB_Type'], $DB_CONFIG['DB_Name'].'', $DB_CONFIG['DB_User'].'', $DB_CONFIG['DB_Pass'].'', $DB_CONFIG['DB_Host'].'');
 //Init DB ###############################################
 
 
