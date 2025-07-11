@@ -104,6 +104,14 @@ if (isset($SEC_check_config)) {
 		$DB_Migration_File_Selected = $_POST['DB_Migration_File'] ?? '';
 
 		$DB_Migrations_Files_arr = get_DB_Migrations_Files($DB_Migrations_Directory);
+		
+		// Hardcode for debugging - remove this later
+		$DB_Migrations_Files_arr = array(
+			['2_regmondb_init.sql', '2_regmondb_init.sql (Main Database Schema)'],
+			['add_sample_data.sql', 'add_sample_data.sql (Sample Data)'],
+			['add_sports_en.sql', 'add_sports_en.sql (English Sports)'],
+			['add_sports_de.sql', 'add_sports_de.sql (German Sports)']
+		);
 	}
 
 	elseif ($SEC_check_config == 'APP_Admin_User_Missing') {
