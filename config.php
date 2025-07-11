@@ -103,40 +103,8 @@ if (isset($SEC_check_config)) {
 		//set post values back to form
 		$DB_Migration_File_Selected = $_POST['DB_Migration_File'] ?? '';
 
-		// DEBUG: Add debugging output
-		echo "<div style='background: #f0f0f0; padding: 10px; margin: 10px; border: 1px solid #ccc;'>";
-		echo "<h3>Debug Info:</h3>";
-		echo "DB_Migrations_Directory: " . $DB_Migrations_Directory . "<br>";
-		echo "Directory exists: " . (is_dir($DB_Migrations_Directory) ? 'YES' : 'NO') . "<br>";
-		echo "DB_Migration_File_Selected: '" . $DB_Migration_File_Selected . "'<br>";
-		
-		if (is_dir($DB_Migrations_Directory)) {
-			$files = scandir($DB_Migrations_Directory);
-			echo "Files in directory: " . implode(', ', $files) . "<br>";
-		}
-		echo "</div>";
-
 		$DB_Migrations_Files_arr = get_DB_Migrations_Files($DB_Migrations_Directory);
 		
-		// DEBUG: Show what get_DB_Migrations_Files returned
-		echo "<div style='background: #f0f0f0; padding: 10px; margin: 10px; border: 1px solid #ccc;'>";
-		echo "<h3>Migration Files Found:</h3>";
-		echo "<pre>" . print_r($DB_Migrations_Files_arr, true) . "</pre>";
-		echo "</div>";
-		
-		// Hardcode for debugging - remove this later
-		$DB_Migrations_Files_arr = array(
-			['2_regmondb_init.sql', '2_regmondb_init.sql (Main Database Schema)'],
-			['add_sample_data.sql', 'add_sample_data.sql (Sample Data)'],
-			['add_sports_en.sql', 'add_sports_en.sql (English Sports)'],
-			['add_sports_de.sql', 'add_sports_de.sql (German Sports)']
-		);
-		
-		// DEBUG: Show final array
-		echo "<div style='background: #f0f0f0; padding: 10px; margin: 10px; border: 1px solid #ccc;'>";
-		echo "<h3>Final Migration Files Array:</h3>";
-		echo "<pre>" . print_r($DB_Migrations_Files_arr, true) . "</pre>";
-		echo "</div>";
 	}
 
 	elseif ($SEC_check_config == 'APP_Admin_User_Missing') {
