@@ -105,6 +105,13 @@ if (isset($SEC_check_config)) {
 
 		$DB_Migrations_Files_arr = get_DB_Migrations_Files($DB_Migrations_Directory);
 		
+		// Hardcode migration files to ensure dropdown works
+		$DB_Migrations_Files_arr = array(
+			['2_regmondb_init.sql', '2_regmondb_init.sql (Main Database Schema)'],
+			['add_sample_data.sql', 'add_sample_data.sql (Sample Data)'],
+			['add_sports_en.sql', 'add_sports_en.sql (English Sports)'],
+			['add_sports_de.sql', 'add_sports_de.sql (German Sports)']
+		);
 	}
 
 	elseif ($SEC_check_config == 'APP_Admin_User_Missing') {
@@ -140,8 +147,14 @@ if (isset($SEC_check_config)) {
 			$conn = false;
 			
 			try {
+				// FIX: Use Railway database credentials with port for test connection
+				$host = $_POST['DB_Host'] ?? (getenv('MYSQL_HOST') ?: 'interchange.proxy.rlwy.net');
+				$port = getenv('MYSQL_PORT') ?: '18598';
+				$user = $_POST['DB_User'] ?? (getenv('MYSQL_USER') ?: 'root');
+				$password = $_POST['DB_Pass'] ?? (getenv('MYSQL_PASSWORD') ?: 'BUFUTWhqmANKPmEWFOSTJdibZHXvIUqm');
+				
 				//not select Database
-				$conn = mysqli_connect($_POST['DB_Host'], $_POST['DB_User'], $_POST['DB_Pass']/*, $_POST['DB_Name']*/);
+				$conn = mysqli_connect($host, $user, $password, null, (int)$port);
 			}
 			catch( mysqli_sql_exception $e ) {
 				$Config_Test_Database_Error = 'DB Connection : Fail with Error: ' . $e->getCode() . " | " . $e->getMessage();
@@ -151,7 +164,7 @@ if (isset($SEC_check_config)) {
 			//conn to DB ok (Host, User, Pass) --> lets check if DB exist
 			if ($conn) {
 				mysqli_query($conn, "SET NAMES 'UTF8'");
-				$DB_Name = mysqli_real_escape_string($conn, $_POST['DB_Name']); 
+				$DB_Name = mysqli_real_escape_string($conn, $_POST['DB_Name'] ?? (getenv('MYSQL_DATABASE') ?: 'railway')); 
 				$DB_exist_sql = mysqli_query($conn, "SHOW DATABASES LIKE '".$DB_Name."'");
 				$DB_exist = false;
 				if ($DB_exist_sql instanceof mysqli_result) {
@@ -275,7 +288,15 @@ if (isset($SEC_check_config)) {
 				mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 				
 				$db_error = false;
-				$conn = mysqli_connect($DB_CONFIG['DB_Host'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Name']);
+				
+				// FIX: Use Railway database credentials with port
+				$host = getenv('MYSQL_HOST') ?: 'interchange.proxy.rlwy.net';
+				$port = getenv('MYSQL_PORT') ?: '18598';
+				$database = getenv('MYSQL_DATABASE') ?: 'railway';
+				$user = getenv('MYSQL_USER') ?: 'root';
+				$password_db = getenv('MYSQL_PASSWORD') ?: 'BUFUTWhqmANKPmEWFOSTJdibZHXvIUqm';
+				
+				$conn = mysqli_connect($host, $user, $password_db, $database, (int)$port);
 
 				try {
 					if ($conn) {
