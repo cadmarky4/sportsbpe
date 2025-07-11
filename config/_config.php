@@ -30,68 +30,10 @@ $ENV_File_Sample = __DIR__ . '/' . $PATH_2_ROOT . '.env.sample';
 
 function get_DB_CONFIG__From_ENV_File(string $ENV_File):mixed {
 	$DB_CONFIG_arr = array();
-	
-	// Try DATABASE_URL first (Railway format)
-	$database_url = getenv("DATABASE_URL");
-	if ($database_url) {
-		$url = parse_url($database_url);
-		$DB_CONFIG_arr["DB_Host"] = $url['host'];
-		$DB_CONFIG_arr["DB_Name"] = ltrim($url['path'], '/');
-		$DB_CONFIG_arr["DB_User"] = $url['user'];
-		$DB_CONFIG_arr["DB_Pass"] = $url['pass'];
-		$DB_CONFIG_arr["DB_Port"] = $url['port'] ?? '3306';
-		$DB_CONFIG_arr["DB_Type"] = 'mysqli';
-		return $DB_CONFIG_arr;
-	}
-	
-	//load Environment Variables - try multiple formats
-	// Try standard format first (with underscore)
+	//load Environment Variables 
 	$DB_CONFIG_arr["DB_Host"] = getenv("MYSQL_HOST");
 	$DB_CONFIG_arr["DB_Name"] = getenv("MYSQL_DATABASE");
 	$DB_CONFIG_arr["DB_User"] = getenv("MYSQL_USER");
-	$password = getenv("MYSQL_PASSWORD");
-	$port = getenv("MYSQL_PORT");
-	
-	// If standard format not found, try Railway format (no underscore)
-	if (!$DB_CONFIG_arr["DB_Host"]) {
-		$DB_CONFIG_arr["DB_Host"] = getenv("MYSQLHOST");
-	}
-	if (!$DB_CONFIG_arr["DB_Name"]) {
-		$DB_CONFIG_arr["DB_Name"] = getenv("MYSQLDATABASE");
-	}
-	if (!$DB_CONFIG_arr["DB_User"]) {
-		$DB_CONFIG_arr["DB_User"] = getenv("MYSQLUSER") ?: "root";
-	}
-	if (!$password) {
-		$password = getenv("MYSQLPASSWORD");
-	}
-	if (!$port) {
-		$port = getenv("MYSQLPORT");
-	}
-	
-	// Set default port if not specified
-	if (!$port) {
-		$port = "3306";
-	}
-	$DB_CONFIG_arr["DB_Port"] = $port;
-	
-	// Detect database type based on hostname
-	$host = $DB_CONFIG_arr["DB_Host"];
-	if ($host && strpos($host, 'dpg-') === 0) {
-		// This is a Render PostgreSQL hostname
-		$DB_CONFIG_arr["DB_Type"] = 'pgsql';
-	} elseif ($host === 'db') {
-		// This is local Docker MySQL
-		$DB_CONFIG_arr["DB_Type"] = 'mysqli';
-	} elseif ($host && (strpos($host, 'railway.app') !== false || strpos($host, 'rlwy.net') !== false || strpos($host, 'db4free.net') !== false)) {
-		// This is external MySQL service (Railway or others)
-		$DB_CONFIG_arr["DB_Type"] = 'mysqli';
-	} else {
-		// Default to MySQL for external services
-		$DB_CONFIG_arr["DB_Type"] = 'mysqli';
-	}
-	
-	// Handle password from file or direct
 	$file_path = getenv("MYSQL_PASSWORD_FILE");
 	$file_contents = "";
 	if ($file_path) {
@@ -99,11 +41,10 @@ function get_DB_CONFIG__From_ENV_File(string $ENV_File):mixed {
 	} 
 	if ($file_contents) {
 		$DB_CONFIG_arr["DB_Pass"] = trim($file_contents);
-	} else {
-		// Use the password we found above
-		$DB_CONFIG_arr["DB_Pass"] = $password;
+	}  else {
+    	// Fallback to direct password
+    	$DB_CONFIG_arr["DB_Pass"] = getenv("MYSQL_PASSWORD");
 	}
-	
 	return $DB_CONFIG_arr;
 }
 
@@ -159,23 +100,14 @@ else {
 //get $DB_CONFIG #################################
 
 
-//set report off - only for MySQL
-if (isset($DB_CONFIG['DB_Type']) && $DB_CONFIG['DB_Type'] === 'mysqli') {
-	mysqli_report(MYSQLI_REPORT_OFF);
-}
+//set report off
+mysqli_report(MYSQLI_REPORT_OFF);
 //from php 8.1.0 the default is MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT
 
 
 //Init DB ###############################################
 require_once(__DIR__.'/'.$PATH_2_ROOT.'php/class.db.php');	
-
-// Use Railway connection with custom port
-if (isset($DB_CONFIG['DB_Port']) && $DB_CONFIG['DB_Port'] != '3306') {
-    $host_with_port = $DB_CONFIG['DB_Host'] . ':' . $DB_CONFIG['DB_Port'];
-    $db = db::open($DB_CONFIG['DB_Type'], $DB_CONFIG['DB_Name'].'', $DB_CONFIG['DB_User'].'', $DB_CONFIG['DB_Pass'].'', $host_with_port);
-} else {
-    $db = db::open($DB_CONFIG['DB_Type'], $DB_CONFIG['DB_Name'].'', $DB_CONFIG['DB_User'].'', $DB_CONFIG['DB_Pass'].'', $DB_CONFIG['DB_Host'].'');
-}
+$db = db::open('mysqli', $DB_CONFIG['DB_Name'].'', $DB_CONFIG['DB_User'].'', $DB_CONFIG['DB_Pass'].'', $DB_CONFIG['DB_Host'].'');
 //Init DB ###############################################
 
 
