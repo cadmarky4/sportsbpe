@@ -122,7 +122,7 @@ mysqli_report(MYSQLI_REPORT_OFF);
 
 //Init DB ###############################################
 require_once(__DIR__.'/'.$PATH_2_ROOT.'php/class.db.php');	
-$db = db::open('mysqli', $DB_CONFIG['DB_Name'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Host'], (int)$DB_CONFIG['DB_Port']);
+$db = db::open('mysqli', $DB_CONFIG['DB_Name'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Host'], 18598);
 //Init DB ###############################################
 
 
