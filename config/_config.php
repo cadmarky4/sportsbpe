@@ -37,7 +37,7 @@ function get_DB_CONFIG__From_ENV_File(string $ENV_File):mixed {
         // Parse the database URL
         $parsed = parse_url($database_url);
         $DB_CONFIG_arr["DB_Host"] = $parsed['host'];
-        $DB_CONFIG_arr["DB_Port"] = $parsed['port'] ?? 3306;
+        $DB_CONFIG_arr["DB_Port"] = $parsed['port'] ?? 18598;  // Changed from 3306 to 18598
         $DB_CONFIG_arr["DB_Name"] = ltrim($parsed['path'], '/');
         $DB_CONFIG_arr["DB_User"] = $parsed['user'];
         $DB_CONFIG_arr["DB_Pass"] = $parsed['pass'];
