@@ -204,7 +204,7 @@ abstract class db {
 	 * Open a Connection with the Database
 	 * @return mixed
 	 */ 
-	public static function open(mixed $type, mixed $database, string $user = '', string $password = '', string $host = 'localhost', int $Log_Slow_DB_Query_Seconds = 0) {
+	public static function open(mixed $type, mixed $database, string $user = '', string $password = '', string $host = 'localhost', int $port = 3306, int $Log_Slow_DB_Query_Seconds = 0) {
 		$db_new = false;
 		switch($type) {
 			//case 'mysql':
@@ -215,7 +215,7 @@ abstract class db {
 				}
 				if(is_string($database)) {
 					$db_new = new $name();
-					$db_new->_open($database, $user, $password, $host, $Log_Slow_DB_Query_Seconds);
+					$db_new->_open($database, $user, $password, $host, $Log_Slow_DB_Query_Seconds, $port);
 				}
 				break;
 		}
@@ -676,9 +676,9 @@ class db_mysqli extends db {
 	 * also set the encoding to UTF8
 	 * @return bool|mysqli
 	 */
-	protected function _open(string $database, string $user, string $password, string $host, int $Log_Slow_DB_Query_Seconds) {
+	protected function _open(string $database, string $user, string $password, string $host, int $Log_Slow_DB_Query_Seconds, int $port = 3306) {
 		$this->database = $database;
-		$this->connection = mysqli_connect($host, $user, $password, $database);
+		$this->connection = mysqli_connect($host, $user, $password, $database, $port);
 		$this->Log_Slow_DB_Query_Seconds = $Log_Slow_DB_Query_Seconds;
 		// Check connection
 		if (mysqli_connect_errno()) {

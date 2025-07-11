@@ -29,23 +29,38 @@ $ENV_File = __DIR__ . '/' . $PATH_2_ROOT . '.env';
 $ENV_File_Sample = __DIR__ . '/' . $PATH_2_ROOT . '.env.sample';
 
 function get_DB_CONFIG__From_ENV_File(string $ENV_File):mixed {
-	$DB_CONFIG_arr = array();
-	//load Environment Variables 
-	$DB_CONFIG_arr["DB_Host"] = getenv("MYSQL_HOST");
-	$DB_CONFIG_arr["DB_Name"] = getenv("MYSQL_DATABASE");
-	$DB_CONFIG_arr["DB_User"] = getenv("MYSQL_USER");
-	$file_path = getenv("MYSQL_PASSWORD_FILE");
-	$file_contents = "";
-	if ($file_path) {
-		$file_contents = file_get_contents($file_path);
-	} 
-	if ($file_contents) {
-		$DB_CONFIG_arr["DB_Pass"] = trim($file_contents);
-	}  else {
-    	// Fallback to direct password
-    	$DB_CONFIG_arr["DB_Pass"] = getenv("MYSQL_PASSWORD");
-	}
-	return $DB_CONFIG_arr;
+    $DB_CONFIG_arr = array();
+
+    // Check if Railway provides a DATABASE_URL first
+    $database_url = getenv("DATABASE_URL");
+    if ($database_url) {
+        // Parse the database URL
+        $parsed = parse_url($database_url);
+        $DB_CONFIG_arr["DB_Host"] = $parsed['host'];
+        $DB_CONFIG_arr["DB_Port"] = $parsed['port'] ?? 3306;
+        $DB_CONFIG_arr["DB_Name"] = ltrim($parsed['path'], '/');
+        $DB_CONFIG_arr["DB_User"] = $parsed['user'];
+        $DB_CONFIG_arr["DB_Pass"] = $parsed['pass'];
+    } else {
+        // Fallback to individual environment variables
+        $DB_CONFIG_arr["DB_Host"] = getenv("MYSQL_HOST");
+        $DB_CONFIG_arr["DB_Port"] = getenv("MYSQL_PORT") ?: "3306";
+        $DB_CONFIG_arr["DB_Name"] = getenv("MYSQL_DATABASE");
+        $DB_CONFIG_arr["DB_User"] = getenv("MYSQL_USER");
+
+        $file_path = getenv("MYSQL_PASSWORD_FILE");
+        $file_contents = "";
+        if ($file_path) {
+            $file_contents = file_get_contents($file_path);
+        } 
+        if ($file_contents) {
+            $DB_CONFIG_arr["DB_Pass"] = trim($file_contents);
+        } else {
+            // Fallback to direct password
+            $DB_CONFIG_arr["DB_Pass"] = getenv("MYSQL_PASSWORD");
+        }
+    }
+    return $DB_CONFIG_arr;
 }
 
 function is_CONFIG_Option_Missing():bool {
