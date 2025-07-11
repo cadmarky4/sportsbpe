@@ -168,13 +168,55 @@ if (isset($DB_CONFIG['DB_Type']) && $DB_CONFIG['DB_Type'] === 'mysqli') {
 
 //Init DB ###############################################
 require_once(__DIR__.'/'.$PATH_2_ROOT.'php/class.db.php');	
-// Check if db::open supports port parameter
+
+// Custom mysqli connection test for Railway
 if (isset($DB_CONFIG['DB_Port']) && $DB_CONFIG['DB_Port'] != '3306') {
-	// Try to pass port as host:port format for Railway
-	$host_with_port = $DB_CONFIG['DB_Host'] . ':' . $DB_CONFIG['DB_Port'];
-	$db = db::open($DB_CONFIG['DB_Type'], $DB_CONFIG['DB_Name'].'', $DB_CONFIG['DB_User'].'', $DB_CONFIG['DB_Pass'].'', $host_with_port);
+    $host = $DB_CONFIG['DB_Host'];
+    $port = (int)$DB_CONFIG['DB_Port'];
+    $user = $DB_CONFIG['DB_User'];
+    $pass = $DB_CONFIG['DB_Pass'];
+    $database = $DB_CONFIG['DB_Name'];
+    
+    echo "<h3>Testing Railway Connection...</h3>";
+    echo "Host: $host<br>";
+    echo "Port: $port<br>";
+    echo "User: $user<br>";
+    echo "Database: $database<br><br>";
+    
+    // Test direct mysqli connection
+    echo "Testing direct mysqli_connect()...<br>";
+    $test_connection = @mysqli_connect($host, $user, $pass, $database, $port);
+    if ($test_connection) {
+        echo "✅ Direct mysqli connection successful!<br>";
+        echo "Connection ID: " . mysqli_thread_id($test_connection) . "<br>";
+        mysqli_close($test_connection);
+        
+        // Now test with host:port format
+        echo "<br>Testing host:port format...<br>";
+        $host_port = $host . ':' . $port;
+        $test_connection2 = @mysqli_connect($host_port, $user, $pass, $database);
+        if ($test_connection2) {
+            echo "✅ Host:port format also works!<br>";
+            mysqli_close($test_connection2);
+        } else {
+            echo "❌ Host:port format failed: " . mysqli_connect_error() . "<br>";
+        }
+        
+    } else {
+        echo "❌ Direct mysqli connection failed: " . mysqli_connect_error() . "<br>";
+        echo "Error number: " . mysqli_connect_errno() . "<br>";
+    }
+    
+    echo "<hr>";
+    echo "Now testing with your db::open method...<br>";
+}
+
+// Continue with your original db::open code
+if (isset($DB_CONFIG['DB_Port']) && $DB_CONFIG['DB_Port'] != '3306') {
+    $host_with_port = $DB_CONFIG['DB_Host'] . ':' . $DB_CONFIG['DB_Port'];
+    $db = db::open($DB_CONFIG['DB_Type'], $DB_CONFIG['DB_Name'].'', $DB_CONFIG['DB_User'].'', $DB_CONFIG['DB_Pass'].'', $host_with_port);
 } else {
-	$db = db::open($DB_CONFIG['DB_Type'], $DB_CONFIG['DB_Name'].'', $DB_CONFIG['DB_User'].'', $DB_CONFIG['DB_Pass'].'', $DB_CONFIG['DB_Host'].'');
+    $db = db::open($DB_CONFIG['DB_Type'], $DB_CONFIG['DB_Name'].'', $DB_CONFIG['DB_User'].'', $DB_CONFIG['DB_Pass'].'', $DB_CONFIG['DB_Host'].'');
 }
 //Init DB ###############################################
 
