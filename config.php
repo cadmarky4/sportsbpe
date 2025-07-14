@@ -54,10 +54,10 @@ if (isset($SEC_check_config)) {
 		$ENV_File_Missing = true;
 
 		$DB_CONFIG_Default = [
-			'DB_Host' => 'localhost',
-			'DB_Name' => 'regmondb',
-			'DB_User' => 'dbuser',
-			'DB_Pass' => 'root',
+			'DB_Host' => 'interchange.proxy.rlwy.net',
+			'DB_Name' => 'railway',
+			'DB_User' => 'root',
+			'DB_Pass' => 'BUFUTWhqmANKPmEWFOSTJdibZHXvIUqm',
 		];
 		
 		//overwrites

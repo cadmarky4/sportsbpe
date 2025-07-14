@@ -38,9 +38,6 @@ header( 'Location: '.$PATH_2_ROOT.'login.php' );
         <script type="text/javascript">
             window.location.href = "..";
         </script>
-        <title>REGmon - Page Redirection</title>
+        <title>Page Redirection</title>
     </head>
-    <body>
-        If you are not redirected automatically, follow the link to <a href='..'>REGmon</a>
-    </body>
 </html>

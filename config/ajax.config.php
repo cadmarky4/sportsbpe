@@ -28,7 +28,7 @@ switch ($action) {
 
 		require($PATH_2_ROOT.'php/inc.email.php');
 
-		$Subject = 'Test Email SMTP Config - REGmon';
+		$Subject = 'Test Email SMTP Config';
 		$Message = 'Test Email SMTP Config';
 		
 		echo SendEmail($_POST['Your_Test_Email'] ?? '', $Subject, $Message);
