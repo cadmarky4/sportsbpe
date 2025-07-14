@@ -149,7 +149,7 @@ if (isset($SEC_check_config)) {
 			try {
 				// FIX: Use Railway database credentials with port for test connection
 				$host = $_POST['DB_Host'] ?? (getenv('MYSQL_HOST') ?: 'interchange.proxy.rlwy.net');
-				$port = getenv('MYSQL_PORT') ?: '11641';
+				$port = getenv('MYSQL_PORT') ?: '18598';
 				$user = $_POST['DB_User'] ?? (getenv('MYSQL_USER') ?: 'root');
 				$password = $_POST['DB_Pass'] ?? (getenv('MYSQL_PASSWORD') ?: 'BUFUTWhqmANKPmEWFOSTJdibZHXvIUqm');
 				
@@ -218,7 +218,7 @@ if (isset($SEC_check_config)) {
 						try {
 							// FIX: Use Railway database credentials from environment variables
 							$host = getenv('MYSQL_HOST') ?: 'interchange.proxy.rlwy.net';
-							$port = getenv('MYSQL_PORT') ?: '11641';
+							$port = getenv('MYSQL_PORT') ?: '18598';
 							$database = getenv('MYSQL_DATABASE') ?: 'railway';
 							$user = getenv('MYSQL_USER') ?: 'root';
 							$password = getenv('MYSQL_PASSWORD') ?: 'BUFUTWhqmANKPmEWFOSTJdibZHXvIUqm';
@@ -291,7 +291,7 @@ if (isset($SEC_check_config)) {
 				
 				// FIX: Use Railway database credentials with port
 				$host = getenv('MYSQL_HOST') ?: 'interchange.proxy.rlwy.net';
-				$port = getenv('MYSQL_PORT') ?: '11641';
+				$port = getenv('MYSQL_PORT') ?: '18598';
 				$database = getenv('MYSQL_DATABASE') ?: 'railway';
 				$user = getenv('MYSQL_USER') ?: 'root';
 				$password_db = getenv('MYSQL_PASSWORD') ?: 'BUFUTWhqmANKPmEWFOSTJdibZHXvIUqm';
