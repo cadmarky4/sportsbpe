@@ -172,7 +172,7 @@ array(
 	'INFO_PAGE_CONTACT'		=> 'Wenn Sie für die vorliegende Software-Instanz Hilfe benötigen, kontaktieren Sie bitte:',
 	//private group
 	'INDEX_PRIVATE_GROUP' 		=> 'Private Gruppe',
-	'INDEX_PRIVATE_GROUP_MARK'	=> '(privat)',
+	'INDEX_PRIVATE_GROUP_MARK'	=> '',
 	'INDEX_PRIVATE_KEY' 		=> 'Privat Schlüssel',
 	'INDEX_REQUEST_FOR_GROUP'	=> 'Anfragen für Gruppenzuordnung',
 	'INDEX_EXPORT_LINK' 		=> 'Datenabfrage (Export)',

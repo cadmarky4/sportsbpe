@@ -37,7 +37,7 @@ function get_DB_CONFIG__From_ENV_File_Test():array {
         // Parse the database URL
         $parsed = parse_url($database_url);
         $DB_CONFIG_arr["DB_Host"] = $parsed['host'];
-        $DB_CONFIG_arr["DB_Port"] = $parsed['port'] ?? 18598;  // Changed from 3306 to 18598
+        $DB_CONFIG_arr["DB_Port"] = $parsed['port'] ?? 11641;  // Changed from 3306 to 11641
         $DB_CONFIG_arr["DB_Name"] = ltrim($parsed['path'], '/');
         $DB_CONFIG_arr["DB_User"] = $parsed['user'];
         $DB_CONFIG_arr["DB_Pass"] = $parsed['pass'];
@@ -45,7 +45,7 @@ function get_DB_CONFIG__From_ENV_File_Test():array {
         echo "Using individual environment variables<br>";
         // Fallback to individual environment variables
         $DB_CONFIG_arr["DB_Host"] = getenv("MYSQL_HOST");
-        $DB_CONFIG_arr["DB_Port"] = getenv("MYSQL_PORT") ?: "18598";
+        $DB_CONFIG_arr["DB_Port"] = getenv("MYSQL_PORT") ?: "11641";
         $DB_CONFIG_arr["DB_Name"] = getenv("MYSQL_DATABASE");
         $DB_CONFIG_arr["DB_User"] = getenv("MYSQL_USER");
         

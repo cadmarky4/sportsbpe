@@ -37,14 +37,14 @@ function get_DB_CONFIG__From_ENV_File(string $ENV_File):mixed {
         // Parse the database URL
         $parsed = parse_url($database_url);
         $DB_CONFIG_arr["DB_Host"] = $parsed['host'];
-        $DB_CONFIG_arr["DB_Port"] = $parsed['port'] ?? 18598;  // Changed from 3306 to 18598
+        $DB_CONFIG_arr["DB_Port"] = $parsed['port'] ?? 11641;  // Changed from 3306 to 11641
         $DB_CONFIG_arr["DB_Name"] = ltrim($parsed['path'], '/');
         $DB_CONFIG_arr["DB_User"] = $parsed['user'];
         $DB_CONFIG_arr["DB_Pass"] = $parsed['pass'];
     } else {
         // Fallback to individual environment variables
         $DB_CONFIG_arr["DB_Host"] = getenv("MYSQL_HOST");
-        $DB_CONFIG_arr["DB_Port"] = getenv("MYSQL_PORT") ?: "18598";
+        $DB_CONFIG_arr["DB_Port"] = getenv("MYSQL_PORT") ?: "11641";
         $DB_CONFIG_arr["DB_Name"] = getenv("MYSQL_DATABASE");
         $DB_CONFIG_arr["DB_User"] = getenv("MYSQL_USER");
 
@@ -122,7 +122,7 @@ mysqli_report(MYSQLI_REPORT_OFF);
 
 //Init DB ###############################################
 require_once(__DIR__.'/'.$PATH_2_ROOT.'php/class.db.php');	
-$db = db::open('mysqli', $DB_CONFIG['DB_Name'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Host'], 18598);
+$db = db::open('mysqli', $DB_CONFIG['DB_Name'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Host'], 11641);
 //Init DB ###############################################
 
 
