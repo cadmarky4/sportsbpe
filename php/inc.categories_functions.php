@@ -53,7 +53,7 @@ function get_All_Categories():mixed {
 				[id] => 17
 				[parent_id] => 0
 				[sort] => 2
-				[name] => Diagnostik
+				[name] => 
 				[status] => 1
 				[color] => #f2f2f2
 				[created] => 2018-11-16 14:19:25

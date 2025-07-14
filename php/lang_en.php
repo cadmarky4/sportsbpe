@@ -42,9 +42,9 @@ array(
 	'DATE_FROM' 		=> 'Date from',
 	'DATE_TO' 			=> 'Date to',
 	'DASHBOARD'			=> 'Dashboard',
-	'LEFT'				=> 'Links',
-	'CENTER'			=> 'Zentriert',
-	'RIGHT'				=> 'Rechts',
+	'LEFT'				=> 'Left',
+	'CENTER'			=> 'Center',
+	'RIGHT'				=> 'Right',
 	'BUTTON_ADD' 		=> 'Add',
 	'CLICK' 			=> 'Click',
 
