@@ -2,7 +2,7 @@
 -- Data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `parent_id`, `sort`, `name`, `status`, `color`, `created`, `created_by`, `modified`, `modified_by`) VALUES
+INSERT INTO `categories` (`parent_id`, `sort`, `name`, `status`, `color`, `created`, `created_by`, `modified`, `modified_by`) VALUES
 (1, 0, 1, 'forms for testing', 1, '#cccccc', NOW(), 'Auto_Init', NOW(), 'Auto_Init'),
 (2, 0, 2, 'Diagnostics', 1, '#f2f2f2', NOW(), 'Auto_Init', NOW(), 'Auto_Init'),
 (3, 2, 1, 'Recovery and Stress', 1, '#ED7D31', NOW(), 'Auto_Init', NOW(), 'Auto_Init'),
