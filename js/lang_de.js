@@ -141,7 +141,7 @@ LANG = {
 		HEADER 				: 'Gruppen',
 		LOCATION			: 'Standort',
 		NAME 				: 'Gruppenname',
-		PRIVATE 			: 'Privat',
+		PRIVATE 			: 'Private',
 		PRIVATE_KEY 		: 'Privat Schlüssel',
 		PRIVATE_KEY_ERROR 	: 'Privat Schlüssel Fehler',
 		ADMIN 				: 'Gruppenadmin',
