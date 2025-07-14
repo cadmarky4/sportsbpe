@@ -643,12 +643,12 @@ array(
 <br>
 <br>There is a new proposal for a sport.
 <br>
-<br>Benutzername: {Username}
+<br>Username: {Username}
 <br>E-Mail: {Email}
 <br>
-<br>Standort: {Location}
-<br>Gruppe: {Group}
-<br>Profil: {Profile}
+<br>Location: {Location}
+<br>Group: {Group}
+<br>Profile: {Profile}
 <br>
 <br>Big Pond Team"
 );

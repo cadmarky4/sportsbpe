@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `regmondb`
+-- Database: `regmondb`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `categories`
+-- Table structure for table `categories`
 --
 
 CREATE TABLE `categories` (
@@ -44,7 +44,7 @@ CREATE TABLE `categories` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `config`
+-- Table structure for table `config`
 --
 
 CREATE TABLE `config` (
@@ -58,7 +58,7 @@ CREATE TABLE `config` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `dashboard`
+-- Table structure for table `dashboard`
 --
 
 CREATE TABLE `dashboard` (
@@ -80,7 +80,7 @@ CREATE TABLE `dashboard` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `dropdowns`
+-- Table structure for table `dropdowns`
 --
 
 CREATE TABLE `dropdowns` (
@@ -97,7 +97,7 @@ CREATE TABLE `dropdowns` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `forms`
+-- Table structure for table `forms`
 --
 
 CREATE TABLE `forms` (
@@ -118,7 +118,7 @@ CREATE TABLE `forms` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `forms2categories`
+-- Table structure for table `forms2categories`
 --
 
 CREATE TABLE `forms2categories` (
@@ -139,7 +139,7 @@ CREATE TABLE `forms2categories` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `forms_data`
+-- Table structure for table `forms_data`
 --
 
 CREATE TABLE `forms_data` (
@@ -161,7 +161,7 @@ CREATE TABLE `forms_data` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `groups`
+-- Table structure for table `groups`
 --
 
 CREATE TABLE `groups` (
@@ -182,7 +182,7 @@ CREATE TABLE `groups` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `locations`
+-- Table structure for table `locations`
 --
 
 CREATE TABLE `locations` (
@@ -199,7 +199,7 @@ CREATE TABLE `locations` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `login_attempts`
+-- Table structure for table `login_attempts`
 --
 
 CREATE TABLE `login_attempts` (
@@ -210,7 +210,7 @@ CREATE TABLE `login_attempts` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `login_blocks`
+-- Table structure for table `login_blocks`
 --
 
 CREATE TABLE `login_blocks` (
@@ -221,7 +221,7 @@ CREATE TABLE `login_blocks` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `notes`
+-- Table structure for table `notes`
 --
 
 CREATE TABLE `notes` (
@@ -242,7 +242,7 @@ CREATE TABLE `notes` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `sports`
+-- Table structure for table `sports`
 --
 
 CREATE TABLE `sports` (
@@ -259,7 +259,7 @@ CREATE TABLE `sports` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `tags`
+-- Table structure for table `tags`
 --
 
 CREATE TABLE `tags` (
@@ -276,7 +276,7 @@ CREATE TABLE `tags` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `templates_axis`
+-- Table structure for table `templates_axis`
 --
 
 CREATE TABLE `templates_axis` (
@@ -296,7 +296,7 @@ CREATE TABLE `templates_axis` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `templates_forms`
+-- Table structure for table `templates_forms`
 --
 
 CREATE TABLE `templates_forms` (
@@ -317,7 +317,7 @@ CREATE TABLE `templates_forms` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `templates_results`
+-- Table structure for table `templates_results`
 --
 
 CREATE TABLE `templates_results` (
@@ -337,7 +337,7 @@ CREATE TABLE `templates_results` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -370,7 +370,7 @@ CREATE TABLE `users` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `users2forms`
+-- Table structure for table `users2forms`
 --
 
 CREATE TABLE `users2forms` (
@@ -390,7 +390,7 @@ CREATE TABLE `users2forms` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `users2groups`
+-- Table structure for table `users2groups`
 --
 
 CREATE TABLE `users2groups` (
@@ -410,7 +410,7 @@ CREATE TABLE `users2groups` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `users2trainers`
+-- Table structure for table `users2trainers`
 --
 
 CREATE TABLE `users2trainers` (
@@ -430,49 +430,49 @@ CREATE TABLE `users2trainers` (
 
 
 --
--- Indizes der exportierten Tabellen
+-- Indexes of the exported Tabellen
 --
 
 --
--- Indizes für die Tabelle `categories`
+-- Indexes for the table `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `config`
+-- Indexes for the table `config`
 --
 ALTER TABLE `config`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `dashboard`
+-- Indexes for the table `dashboard`
 --
 ALTER TABLE `dashboard`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`,`group_id`);
 
 --
--- Indizes für die Tabelle `dropdowns`
+-- Indexes for the table `dropdowns`
 --
 ALTER TABLE `dropdowns`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `forms`
+-- Indexes for the table `forms`
 --
 ALTER TABLE `forms`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `forms2categories`
+-- Indexes for the table `forms2categories`
 --
 ALTER TABLE `forms2categories`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `form_id` (`form_id`,`category_id`);
 
 --
--- Indizes für die Tabelle `forms_data`
+-- Indexes for the table `forms_data`
 --
 ALTER TABLE `forms_data`
   ADD PRIMARY KEY (`id`),
@@ -480,80 +480,80 @@ ALTER TABLE `forms_data`
   ADD KEY `user_id_2` (`user_id`,`form_id`,`group_id`);
 
 --
--- Indizes für die Tabelle `groups`
+-- Indexes for the table `groups`
 --
 ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `locations`
+-- Indexes for the table `locations`
 --
 ALTER TABLE `locations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `notes`
+-- Indexes for the table `notes`
 --
 ALTER TABLE `notes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`,`group_id`);
 
 --
--- Indizes für die Tabelle `sports`
+-- Indexes for the table `sports`
 --
 ALTER TABLE `sports`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `tags`
+-- Indexes for the table `tags`
 --
 ALTER TABLE `tags`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `templates_axis`
+-- Indexes for the table `templates_axis`
 --
 ALTER TABLE `templates_axis`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`,`group_id`);
 
 --
--- Indizes für die Tabelle `templates_forms`
+-- Indexes for the table `templates_forms`
 --
 ALTER TABLE `templates_forms`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`,`group_id`);
 
 --
--- Indizes für die Tabelle `templates_results`
+-- Indexes for the table `templates_results`
 --
 ALTER TABLE `templates_results`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`,`group_id`);
 
 --
--- Indizes für die Tabelle `users`
+-- Indexes for the table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `account` (`account`,`uname`);
 
 --
--- Indizes für die Tabelle `users2forms`
+-- Indexes for the table `users2forms`
 --
 ALTER TABLE `users2forms`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `user_id` (`user_id`,`group_id`,`category_id`,`form_id`);
 
 --
--- Indizes für die Tabelle `users2groups`
+-- Indexes for the table `users2groups`
 --
 ALTER TABLE `users2groups`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `user_id` (`user_id`,`group_id`);
 
 --
--- Indizes für die Tabelle `users2trainers`
+-- Indexes for the table `users2trainers`
 --
 ALTER TABLE `users2trainers`
   ADD PRIMARY KEY (`id`),
@@ -561,119 +561,119 @@ ALTER TABLE `users2trainers`
   ADD KEY `user_id_2` (`user_id`,`group_id`);
 
 --
--- AUTO_INCREMENT für exportierte Tabellen
+-- AUTO_INCREMENT for exported table
 --
 
 --
--- AUTO_INCREMENT für Tabelle `categories`
+-- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `config`
+-- AUTO_INCREMENT for table `config`
 --
 ALTER TABLE `config`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `dashboard`
+-- AUTO_INCREMENT for table `dashboard`
 --
 ALTER TABLE `dashboard`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `dropdowns`
+-- AUTO_INCREMENT for table `dropdowns`
 --
 ALTER TABLE `dropdowns`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `forms`
+-- AUTO_INCREMENT for table `forms`
 --
 ALTER TABLE `forms`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `forms2categories`
+-- AUTO_INCREMENT for table `forms2categories`
 --
 ALTER TABLE `forms2categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `forms_data`
+-- AUTO_INCREMENT for table `forms_data`
 --
 ALTER TABLE `forms_data`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `groups`
+-- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `locations`
+-- AUTO_INCREMENT for table `locations`
 --
 ALTER TABLE `locations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `notes`
+-- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `sports`
+-- AUTO_INCREMENT for table `sports`
 --
 ALTER TABLE `sports`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `tags`
+-- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `templates_axis`
+-- AUTO_INCREMENT for table `templates_axis`
 --
 ALTER TABLE `templates_axis`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `templates_forms`
+-- AUTO_INCREMENT for table `templates_forms`
 --
 ALTER TABLE `templates_forms`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `templates_results`
+-- AUTO_INCREMENT for table `templates_results`
 --
 ALTER TABLE `templates_results`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `users2forms`
+-- AUTO_INCREMENT for table `users2forms`
 --
 ALTER TABLE `users2forms`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `users2groups`
+-- AUTO_INCREMENT for table `users2groups`
 --
 ALTER TABLE `users2groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `users2trainers`
+-- AUTO_INCREMENT for table `users2trainers`
 --
 ALTER TABLE `users2trainers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
