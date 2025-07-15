@@ -327,7 +327,7 @@ class Captcha {
         if ( function_exists('mime_content_type') ) {
             return mime_content_type( $filePath );
         } else {
-            // Some PHP 5.3 builds don't have mime_content_type because it's deprecated
+            // Some PHP 5.3 builds dont have mime_content_type because it's deprecated
             if ( function_exists('finfo_open') ) {// Use finfo (right way)
                 $finfo = finfo_open( FILEINFO_MIME_TYPE );
 

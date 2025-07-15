@@ -270,7 +270,7 @@ function item_Note_Date_init(element, pos) {
 		$(this).find('input').trigger('change'); //this=div
 	});
 
-	$(element).data("DateTimePicker").widgetPositioning({horizontal: pos, vertical: 'bottom'}); //don't know why needed again here to work
+	$(element).data("DateTimePicker").widgetPositioning({horizontal: pos, vertical: 'bottom'}); //dont know why needed again here to work
 }
 
 

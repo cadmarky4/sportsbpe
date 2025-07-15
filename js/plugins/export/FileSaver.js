@@ -96,7 +96,7 @@ var saveAs = saveAs || (function(view) {
 				}
 				// on any filesys errors revert to saving with object URLs
 				, fs_error = function() {
-					// don't create more object URLs than needed
+					// dont create more object URLs than needed
 					if (blob_changed || !object_url) {
 						object_url = get_URL().createObjectURL(blob);
 					}

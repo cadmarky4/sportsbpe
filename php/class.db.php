@@ -276,7 +276,7 @@ abstract class db {
 		$sql = 'INSERT INTO ' . $table . ' (' . implode(',', (array)$this->_quoteFields(array_keys((array)$data))) . ') VALUES(' . implode(',', $this->placeHolders($data)) . ')';
 
 		/**
-		 * don't wrap single inserts in transactions 
+		 * dont wrap single inserts in transactions 
 		 * By forcing each insert to be in a transaction, 
 		 * the user is denied control over transaction granularity. 
 		 * As a side-note, users can now diagnose failed inserts, since the rollback cleared errors.
@@ -455,7 +455,7 @@ abstract class db {
 	/**
 	 * makeQuery
 	 * This combines a query and parameter array into a final query string for execution
-	 * PDO drivers don't need to use this
+	 * PDO drivers dont need to use this
 	 */
 	protected function makeQuery(string $sql, mixed $parameters):string {
 		// bypass extra logic if we have no parameters
@@ -555,7 +555,7 @@ abstract class db {
 		$values = array();
 		foreach((array)$data as $key => $value) {
 			$escape = true;
-			// don't quote or esc if value is an array, we treat it as a "decorator" 
+			// dont quote or esc if value is an array, we treat it as a "decorator" 
 			// that tells us not to escape the value contained in the array
 			if(is_array($value) && !is_object($value)) {
 				$escape = false;

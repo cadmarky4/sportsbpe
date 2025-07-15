@@ -21,7 +21,7 @@
 
 		var noOp = $.noop || function() {};
 
-		// this bit is to ensure we don't call setExpression when we shouldn't (with extra muscle to handle
+		// this bit is to ensure we dont call setExpression when we shouldn't (with extra muscle to handle
 		// retarded userAgent strings on Vista)
 		var msie = /MSIE/.test(navigator.userAgent);
 		var ie6  = /MSIE 6.0/.test(navigator.userAgent) && ! /MSIE 8.0/.test(navigator.userAgent);
@@ -205,7 +205,7 @@
 			// time in millis to wait before auto-unblocking; set to 0 to disable auto-unblock
 			timeout: 0,
 
-			// disable if you don't want to show the overlay
+			// disable if you dont want to show the overlay
 			showOverlay: true,
 
 			// if true, focus will be placed in the first available input field when
@@ -232,13 +232,13 @@
 			// setting this will turn the cursor to a pointer, otherwise cursor defined in overlayCss will be used.
 			onOverlayClick: null,
 
-			// don't ask; if you really must know: http://groups.google.com/group/jquery-en/browse_thread/thread/36640a8730503595/2f6a79a77a78e493#2f6a79a77a78e493
+			// dont ask; if you really must know: http://groups.google.com/group/jquery-en/browse_thread/thread/36640a8730503595/2f6a79a77a78e493#2f6a79a77a78e493
 			quirksmodeOffsetHack: 4,
 
 			// class name of the message block
 			blockMsgClass: 'blockMsg',
 
-			// if it is already blocked, then ignore it (don't unblock and reblock)
+			// if it is already blocked, then ignore it (dont unblock and reblock)
 			ignoreIfBlocked: false
 		};
 
@@ -504,7 +504,7 @@
 		function reset(els,data,opts,el) {
 			var $el = $(el);
 			els.each(function(i,o) {
-				// remove via DOM calls so we don't lose event handlers
+				// remove via DOM calls so we dont lose event handlers
 				if (this.parentNode)
 					this.parentNode.removeChild(this);
 			});
@@ -534,13 +534,13 @@
 		function bind(b, el, opts) {
 			var full = el == window, $el = $(el);
 
-			// don't bother unbinding if there is nothing to unbind
+			// dont bother unbinding if there is nothing to unbind
 			if (!b && (full && !pageBlock || !full && !$el.data('blockUI.isBlocked')))
 				return;
 
 			$el.data('blockUI.isBlocked', b);
 
-			// don't bind events when overlay is not in use or if bindEvents is false
+			// dont bind events when overlay is not in use or if bindEvents is false
 			if (!full || !opts.bindEvents || (b && !opts.showOverlay))
 				return;
 

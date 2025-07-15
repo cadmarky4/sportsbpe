@@ -212,13 +212,13 @@ switch ($action) {
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
-				//don't want groupadmins to see the private groups except if is admins of the group
+				//dont want groupadmins to see the private groups except if is admins of the group
 				if (($GROUP_ADMIN OR $GROUP_ADMIN_2) AND $row['status'] == 3) {
 					if (!in_array($UID, explode(',', $row['admins_id']??''))) {
 						continue;
 					}
 				}
-				//don't want groupadmins to see inactive groups
+				//dont want groupadmins to see inactive groups
 				if (($GROUP_ADMIN OR $GROUP_ADMIN_2) AND $row['status'] == 0) {
 					continue;
 				}

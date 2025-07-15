@@ -78,7 +78,7 @@ div[id^='gbox_']:not([id$='_t_tree']):not([id$='_t']), div[id^='editmod'], div[i
     white-space: normal; /*mozila* /
 }*/
 
-/* mozila show bigger don't know why*/
+/* mozila show bigger dont know why*/
 .ui-jqdialog { font-size:10px;}
 
 
