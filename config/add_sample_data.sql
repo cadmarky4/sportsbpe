@@ -115,7 +115,7 @@ INSERT INTO `dropdowns` (`id`, `parent_id`, `name`, `options`, `status`, `create
 (84, 0, 'MEQ - Getting Up ', NULL, 1, NOW(), NOW()),
 (85, 84, NULL, '1__not easy at all', 1, NOW(), NOW()),
 (86, 84, NULL, '2__not very easy', 1, NOW(), NOW()),
-(87, 84, NULL, '3__quite easy ', 1, NOW(), NOW()),
+(87, 84, NULL, '3__quite easy', 1, NOW(), NOW()),
 (88, 84, NULL, '4__very easy', 1, NOW(), NOW()),
 (89, 0, 'MEQ - Waking Up ', NULL, 1, NOW(), NOW()),
 (90, 89, NULL, '1__not awake at all', 1, NOW(), NOW()),
